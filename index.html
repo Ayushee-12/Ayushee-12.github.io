@@ -1,7 +1,196 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Website</title>
+    <title>Animated E‑Commerce — Ayushee</title>
+    <style>
+      :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+      *{box-sizing:border-box}
+      html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071129 0%, #071730 50%, #0b1220 100%);-webkit-font-smoothing:antialiased}
+      header{display:flex;align-items:center;justify-content:space-between;padding:20px 32px}
+      .brand{display:flex;align-items:center;gap:12px}
+      .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:grid;place-items:center;font-weight:700;color:#071129}
+      h1{margin:0;font-size:18px}
+      .search{flex:1;margin:0 20px}
+      .search input{width:100%;padding:10px 14px;border-radius:12px;border:0;background:var(--glass);color:var(--muted);outline:2px solid transparent;transition:outline .18s}
+      .search input:focus{outline-color:rgba(6,182,212,0.18)}
+      .cart{position:relative}
+      .cart button{background:linear-gradient(90deg,var(--accent),#7c3aed);border:0;padding:10px 14px;border-radius:12px;color:#071129;font-weight:600;cursor:pointer}
+      .cart-count{position:absolute;right:-8px;top:-8px;background:#ff6b6b;color:#071129;padding:4px 7px;border-radius:999px;font-size:12px;font-weight:700}
+
+      main{padding:24px 32px}
+      .hero{display:flex;gap:24px;align-items:center;margin-bottom:20px}
+      .hero-left{flex:1}
+      .hero h2{margin:0 0 8px 0;font-size:28px}
+      .hero p{margin:0;color:var(--muted)}
+      .shop-now{margin-top:14px;padding:10px 16px;border-radius:12px;border:0;background:#fff;color:#071129;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(7,17,41,0.6);transform:translateY(0);transition:transform .18s}
+      .shop-now:hover{transform:translateY(-4px)}
+
+      .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+      .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden;transform:translateY(0);transition:transform .25s,box-shadow .25s}
+      .card:hover{transform:translateY(-8px);box-shadow:0 12px 30px rgba(2,6,23,0.6)}
+      .img-wrap{height:160px;border-radius:10px;background:#071730;display:grid;place-items:center;overflow:hidden}
+      .img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+      .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+      .title{font-weight:700}
+      .price{color:var(--accent);font-weight:800}
+      .add{margin-top:12px;display:flex;gap:8px}
+      .add button{flex:1;padding:10px;border-radius:10px;border:0;background:var(--accent);color:#071129;font-weight:700;cursor:pointer}
+
+      /* reveal animation */
+      .reveal{opacity:0;transform:translateY(18px) scale(.99);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.9,.2,1)}
+      .reveal.in{opacity:1;transform:translateY(0) scale(1)}
+
+      /* floating product animation */
+      .flying{position:fixed;pointer-events:none;z-index:9999;border-radius:10px;transition:transform .9s cubic-bezier(.2,.9,.2,1),opacity .6s}
+
+      /* subtle background motion */
+      .bg-anim{position:fixed;inset:0;z-index:0;opacity:.06;background:radial-gradient(circle at 10% 20%, #06b6d4 0%, transparent 8%),radial-gradient(circle at 80% 70%, #7c3aed 0%, transparent 10%);filter:blur(60px);pointer-events:none}
+
+      footer{padding:24px 32px;color:var(--muted);font-size:13px}
+
+      @media (max-width:600px){.hero{flex-direction:column;align-items:flex-start}.search{margin:12px 0}}
+    </style>
+  </head>
+  <body>
+    <div class="bg-anim" aria-hidden></div>
+    <header>
+      <div class="brand">
+        <div class="logo">AE</div>
+        <div>
+          <h1>Ayushee Shop</h1>
+          <div style="font-size:12px;color:var(--muted)">Animated e‑commerce demo</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input id="search" placeholder="Search products, e.g. sneakers" />
+      </div>
+
+      <div class="cart">
+        <button id="cartBtn">Cart</button>
+        <div class="cart-count" id="cartCount">0</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-left reveal in">
+          <h2>Find products you'll love — with playful animations</h2>
+          <p>Lightweight demo of an animated product gallery, add-to-cart fly effect, and responsive layout.</p>
+          <button class="shop-now" id="shopNow">Shop Now</button>
+        </div>
+        <div style="width:320px" class="reveal in">
+          <div style="background:linear-gradient(180deg,#061426,#0b1220);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
+            <strong style="display:block">Limited Drop</strong>
+            <small style="color:var(--muted)">New arrivals with motion</small>
+            <div style="height:120px;margin-top:10px;border-radius:10px;overflow:hidden">
+              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1" style="width:100%;height:100%;object-fit:cover;display:block" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="grid" id="productGrid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer>© <strong>Ayushee Shop</strong> — Animated demo. No real purchases.</footer>
+
+    <script>
+      // sample products
+      const products = [
+        {id:1,title:'Aurora Sneakers',price:79,image:'https://picsum.photos/seed/s1/800/600'},
+        {id:2,title:'Nimbus Hoodie',price:59,image:'https://picsum.photos/seed/s2/800/600'},
+        {id:3,title:'Lumen Backpack',price:99,image:'https://picsum.photos/seed/s3/800/600'},
+        {id:4,title:'Orbit Watch',price:129,image:'https://picsum.photos/seed/s4/800/600'},
+        {id:5,title:'Pixel Tee',price:25,image:'https://picsum.photos/seed/s5/800/600'},
+        {id:6,title:'Comet Cap',price:19,image:'https://picsum.photos/seed/s6/800/600'}
+      ];
+
+      const grid = document.getElementById('productGrid');
+      const cartCount = document.getElementById('cartCount');
+      const cartBtn = document.getElementById('cartBtn');
+
+      let cart = [];
+
+      function render(){
+        grid.innerHTML = '';
+        products.forEach(p => {
+          const card = document.createElement('div'); card.className='card reveal';
+          card.innerHTML = `
+            <div class="img-wrap"><img src="${p.image}" alt="${p.title}" loading="lazy"/></div>
+            <div class="meta"><div class="title">${p.title}</div><div class="price">$${p.price}</div></div>
+            <div class="add"><button class="addBtn" data-id="${p.id}">Add to cart</button></div>`;
+          grid.appendChild(card);
+        });
+
+        // reveal animation on mount
+        requestAnimationFrame(()=>{
+          document.querySelectorAll('.reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), i*80));
+        })
+      }
+
+      function flyToCart(imgEl){
+        const rect = imgEl.getBoundingClientRect();
+        const clone = imgEl.cloneNode(true);
+        clone.style.width = rect.width + 'px';
+        clone.style.height = rect.height + 'px';
+        clone.className = 'flying';
+        clone.style.left = rect.left + 'px';
+        clone.style.top = rect.top + 'px';
+        document.body.appendChild(clone);
+
+        const cartRect = cartBtn.getBoundingClientRect();
+        const tx = cartRect.left + cartRect.width/2 - (rect.left + rect.width/2);
+        const ty = cartRect.top + cartRect.height/2 - (rect.top + rect.height/2);
+
+        requestAnimationFrame(()=>{
+          clone.style.transform = `translate(${tx}px, ${ty}px) scale(.18)`;
+          clone.style.opacity = '0.5';
+        });
+
+        setTimeout(()=>clone.remove(), 900);
+      }
+
+      grid.addEventListener('click', e => {
+        const btn = e.target.closest('.addBtn');
+        if(!btn) return;
+        const id = Number(btn.dataset.id);
+        const prod = products.find(p=>p.id===id);
+        cart.push(prod);
+        cartCount.textContent = cart.length;
+
+        // flying animation: find image element in same card
+        const card = btn.closest('.card');
+        const img = card.querySelector('img');
+        if(img) flyToCart(img);
+      });
+
+      document.getElementById('shopNow').addEventListener('click', ()=>{
+        window.scrollTo({top:document.querySelector('#productGrid').offsetTop-20,behavior:'smooth'});
+      });
+
+      // simple search
+      document.getElementById('search').addEventListener('input', (e)=>{
+        const q = e.target.value.toLowerCase();
+        const filtered = products.filter(p=>p.title.toLowerCase().includes(q));
+        grid.innerHTML='';
+        filtered.forEach(p=>{
+          const card = document.createElement('div'); card.className='card reveal in';
+          card.innerHTML = `
+            <div class="img-wrap"><img src="${p.image}" alt="${p.title}" loading="lazy"/></div>
+            <div class="meta"><div class="title">${p.title}</div><div class="price">$${p.price}</div></div>
+            <div class="add"><button class="addBtn" data-id="${p.id}">Add to cart</button></div>`;
+          grid.appendChild(card);
+        })
+      });
+
+      // initial render
+      render();
+    </script>
+  </body>
+</html>
 </head>
 <body>
   <h1>Hello World!</h1>
