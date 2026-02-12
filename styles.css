@@ -285,7 +285,7 @@ a {
 
 .category-card {
     background: white;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: var(--border-radius);
     text-align: center;
     cursor: pointer;
@@ -298,13 +298,26 @@ a {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-.category-icon img{
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    max-width: 10%;
-    max-height: 10%;
-    object-fit: cover;
+.category-card:hover img {
+    transform: scale(1.08);
 }
+
+.category-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease; /* prevents cropping */
+}
+
+.category-icon {
+    width: 100%;
+    height: 120px;              /* important: fixed box */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
 
 .category-card h3 {
     color: var(--dark-color);
