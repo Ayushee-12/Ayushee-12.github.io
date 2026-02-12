@@ -301,8 +301,8 @@ a {
 .category-icon img{
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    width: 80px;     /* change size here */
-    height: 80px;    /* optional */
+    width: auto;     /* change size here */
+    height: auto;    /* optional */
     object-fit: contain;
 }
 
