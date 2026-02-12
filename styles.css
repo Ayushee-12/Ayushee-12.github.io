@@ -279,8 +279,9 @@ a {
 
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 24px;
+    align-items: stretch;
 }
 
 .category-card {
@@ -306,17 +307,20 @@ a {
 .category-icon img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease; /* prevents cropping */
+    object-fit: contain;     /* keeps full image visible */
+    transition: transform 0.25s ease;/* prevents cropping */
 }
 
 .category-icon {
     width: 100%;
-    height: 120px;              /* important: fixed box */
+    aspect-ratio: 1 / 1;     /* ⭐ makes perfect square frame */
+    background: #f6f7fb;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
+    padding: 18px;
+    overflow: hidden;
 }
 
 
