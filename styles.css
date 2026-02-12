@@ -301,9 +301,9 @@ a {
 .category-icon img{
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    max-width: 100%;
-    height: auto;    /* optional */
-    object-fit: contain;
+    max-width: 10%;
+    max-height: 10%;
+    object-fit: cover;
 }
 
 .category-card h3 {
